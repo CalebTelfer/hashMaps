@@ -225,6 +225,37 @@ class HashMap {
 
         return returnArray;
     }
+
+    keys() {
+        let returnArray = [];
+
+        for (let i = 0; i < this.capacity; i++) { //loop every bucket
+            let bucket = this.map[i];
+
+            if (bucket) {
+                if (bucket.length > 0) {
+                    if (bucket[0].isLinkedList) { // if linked list 
+                        let list = bucket[0];
+                        let currentNode = list.head;
+
+                        for (let j = 0; j < list.size; j++) {   //loop all nodes
+                            let key = currentNode.value[0];
+
+                            returnArray.push(key);
+
+                            currentNode = currentNode.next;
+                        }
+
+
+                    } else {
+                        returnArray.push(bucket[0][0]); // if its a single mother bucket. return the single key pair
+                    }
+                }
+            }
+        }
+
+        return returnArray;
+    }
 }
 
 class LinkedList {
