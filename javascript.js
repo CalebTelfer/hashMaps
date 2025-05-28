@@ -147,6 +147,45 @@ class HashMap {
         }
 
     }
+
+    remove(key) {
+        const hashKey = this.hash(key);
+        let bucket = this.map[hashKey];
+
+
+        if (!bucket[0]) {
+            return false;
+        }
+
+        if(bucket[0].isLinkedList) {
+            let list = bucket[0];
+
+            let currentItem = list.head;
+
+
+            for (let i = 0; i < list.size; i++) {
+                if (currentItem.value[0] == key) {
+
+                    list.delete(currentItem);
+                    return true; // key found. remove node
+                }
+
+                currentItem = currentItem.next;
+            }
+
+            return false;
+
+        } else { //bucket just has one array. not a linked list
+
+            if (bucket[0][0] == key) {
+                this.map[hashKey] = [];
+                return true; //key found reset bucket
+            } else {
+                return false;
+            }
+
+        }
+    }
 }
 
 class LinkedList {
@@ -176,6 +215,38 @@ class LinkedList {
             this.tail = newNode;
         }
         this.size++;
+    }
+
+    delete(targetNode) {
+        let current = this.head;
+        let prev = null;
+
+        while (current) {
+            if (current == targetNode) {
+                // delete node
+
+                if(this.head == current) {
+                    this.head = current.next;
+                    return;
+                }
+
+                if (this.tail == current) {
+                    this.tail = prev;
+                    prev.next = null;
+                    return;
+                }
+
+                //if not tail or not head
+
+                prev.next = current.next;
+                return;
+                
+            } else {
+                prev = current;
+                current = current.next; // should find the node before this is ever null.
+            }
+        }
+
     }
 
 }
