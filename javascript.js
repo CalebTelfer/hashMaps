@@ -1,9 +1,9 @@
 class HashMap {
     constructor() {
-        this.map = new Array(this.capacity).fill(null).map(() => []);
         this.loadFactor = 0.8;
         this.capacity = 16;
         this.size = 0;
+        this.map = new Array(this.capacity).fill(null).map(() => []);
     }
 
 
@@ -358,3 +358,11 @@ class Node {
         this.next = null;
     }
 }
+
+
+// testing now. after 360 lines of code lol. THIS BETTER WORK MANNN
+
+const test = new HashMap() // or HashMap() if using a factory
+
+
+test.set('apple', 'red')
