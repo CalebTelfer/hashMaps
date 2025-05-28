@@ -415,8 +415,6 @@ test.set('ice cream', 'white')
 test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
-test.set('frog', 'black')
+test.set('frtg', 'golddwaddwaen')
 
-
-console.log(test.map[10][0])
-console.log(test.values())
+// finished.
