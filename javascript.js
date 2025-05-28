@@ -60,6 +60,8 @@ class HashMap {
                 this.size += 1;
 
             }
+        } else {
+            bucket.push([key, value]);
         }
         if (this.needMoreBuckets()) {
             //call something to make new buckets and reassign all the sh.
@@ -366,3 +368,6 @@ const test = new HashMap() // or HashMap() if using a factory
 
 
 test.set('apple', 'red')
+
+
+console.log(test.map[10])
