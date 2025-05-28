@@ -186,6 +186,13 @@ class HashMap {
 
         }
     }
+
+    clear() {
+        this.map = new Array(this.capacity).fill(null).map(() => []);
+        this.loadFactor = 0.8;
+        this.capacity = 16;
+        this.size = 0;
+    }
 }
 
 class LinkedList {
@@ -240,7 +247,7 @@ class LinkedList {
 
                 prev.next = current.next;
                 return;
-                
+
             } else {
                 prev = current;
                 current = current.next; // should find the node before this is ever null.
