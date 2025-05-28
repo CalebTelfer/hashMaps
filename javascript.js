@@ -27,7 +27,7 @@ class HashMap {
                 bucket[0].append([key, value]);
                 this.map[hashKey] = bucket;
 
-                this.size += 1;
+                this.size ++;
 
             } else { //not linked list so there is only one [key, value] in bucket
 
@@ -57,14 +57,15 @@ class HashMap {
 
                 bucket.push(list);
                 this.map[hashKey] = bucket;
-                this.size += 1;
+                this.size++;
 
             }
         } else {
             bucket.push([key, value]);
+            this.size++;
         }
         if (this.needMoreBuckets()) {
-            //call something to make new buckets and reassign all the sh.
+            this.makeMoreBuckets(); // double capacity if needed
         }
     }
 
@@ -75,6 +76,41 @@ class HashMap {
             return false;
         }
     }
+
+
+    makeMoreBuckets() {
+        const oldMap = this.map;
+        this.capacity = this.capacity * 2;
+        this.map = new Array(this.capacity).fill(null).map(() => []);
+        this.size = 0;
+
+        for (let i = 0; i < this.capacity; i++) { //loop every bucket
+            let bucket = oldMap[i];
+
+            if (bucket) {
+                if (bucket.length > 0) {
+                    if (bucket[0].isLinkedList) { // if linked list 
+                        let list = bucket[0];
+                        let currentNode = list.head;
+
+                        for (let j = 0; j < list.size; j++) {   //loop all nodes
+                            let key = currentNode.value[0];
+                            let value = currentNode.value[1];
+
+                            this.set(key, value); //rehash and insert all list nodes.
+
+                            currentNode = currentNode.next;
+                        }
+
+
+                    } else {
+                        this.set(bucket[0][0], bucket[0][1]); //rehash and set single key value buckets too.
+                    }
+                }
+            }
+        }
+    }
+
 
     has(key) {
         const hashKey = this.hash(key);
@@ -368,6 +404,19 @@ const test = new HashMap() // or HashMap() if using a factory
 
 
 test.set('apple', 'red')
+test.set('banana', 'yellow')
+test.set('carrot', 'orange')
+test.set('dog', 'brown')
+test.set('elephant', 'gray')
+test.set('frog', 'green')
+test.set('grape', 'purple')
+test.set('hat', 'black')
+test.set('ice cream', 'white')
+test.set('jacket', 'blue')
+test.set('kite', 'pink')
+test.set('lion', 'golden')
+test.set('frog', 'black')
 
 
-console.log(test.map[10])
+console.log(test.map[10][0])
+console.log(test.values())
