@@ -82,34 +82,70 @@ class HashMap {
             return false;
         }
 
-        if(bucket.length > 0) {
-            if(bucket[0].isLinkedList) {
-                let list = bucket[0];
 
-                let currentItem = list.head;
+        if(bucket[0].isLinkedList) {
+            let list = bucket[0];
+
+            let currentItem = list.head;
 
 
-                for (let i = 0; i < list.size; i++) {
-                    if (currentItem.value[0] == key) {
-                        return true; //same key found.
-                    }
-
-                    currentItem = currentItem.next;
+            for (let i = 0; i < list.size; i++) {
+                if (currentItem.value[0] == key) {
+                    return true; //same key found.
                 }
 
+                currentItem = currentItem.next;
+            }
+
+            return false;
+
+        } else { //bucket just has one array. not a linked list
+
+            if (bucket[0][0] == key) {
+                return true; //same key has been found
+            } else {
                 return false;
-
-            } else { //bucket just has one array. not a linked list
-
-                if (bucket[0][0] == key) {
-                    return true; //same key has been found
-                } else {
-                    return false;
-                }
-
             }
 
         }
+    }
+
+
+    get(key) {
+        const hashKey = this.hash(key);
+        let bucket = this.map[hashKey];
+
+
+        if (!bucket[0]) {
+            return null;
+        }
+
+        if(bucket[0].isLinkedList) {
+            let list = bucket[0];
+
+            let currentItem = list.head;
+
+
+            for (let i = 0; i < list.size; i++) {
+                if (currentItem.value[0] == key) {
+                    return currentItem.value[1]; // key found. return value
+                }
+
+                currentItem = currentItem.next;
+            }
+
+            return null;
+
+        } else { //bucket just has one array. not a linked list
+
+            if (bucket[0][0] == key) {
+                return bucket[0][1]; //key found return value
+            } else {
+                return null;
+            }
+
+        }
+
     }
 }
 
